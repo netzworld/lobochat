@@ -3,7 +3,7 @@ import styles from "../styles/Home.module.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { API, Auth, withSSRContext, graphqlOperation } from "aws-amplify";
 import Message from "../components/message";
-import { listMessages } from "../graphql/queries";
+import { listMessages, listUsers } from "../graphql/queries";
 import { createMessage, createUser } from "../graphql/mutations";
 import { onCreateMessage } from "../graphql/subscriptions";
 
@@ -37,6 +37,16 @@ function Home({ messages, signOut }) {
       });
       console.log("Created the user ", userInput.name);
     } catch (err) {
+      console.error(err);
+    }
+
+    try {
+      const users = await API.graphql({
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+        query: listUsers,
+      });
+      console.log(users);
+    } catch (error) {
       console.error(err);
     }
 
