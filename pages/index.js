@@ -4,7 +4,7 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 import { API, Auth, withSSRContext, graphqlOperation } from "aws-amplify";
 import Message from "../components/message";
 import { listMessages } from "../graphql/queries";
-import { createMessage } from "../graphql/mutations";
+import { createMessage, createUser } from "../graphql/mutations";
 import { onCreateMessage } from "../graphql/subscriptions";
 
 
@@ -23,6 +23,22 @@ function Home({ messages, signOut }) {
       owner: user.username, // this is the username of the current user
     };
 
+    const userInput = {
+      name: user.username
+    };
+
+    try{
+      await API.graphql({
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+        query: createUser,
+        variables: {
+          input: userInput,
+        },
+      });
+      console.log("Created the user ", userInput.name);
+    } catch (err) {
+      console.error(err);
+    }
 
     // Try make the mutation to graphql API
     try {

@@ -10,3 +10,15 @@ type Message
   owner: String!
   message: String!
 }
+
+type User @model
+  @auth(
+    rules: [
+      # Allow signed in users to perform all actions
+      { allow: private }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  friends: [String!]!
+}

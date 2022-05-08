@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "lobochat1159650d3": {}
+        "lobochat1159650d3": {},
+        "userPoolGroups": {}
       }
     }
   }

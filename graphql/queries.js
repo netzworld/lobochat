@@ -30,3 +30,19 @@ export const listMessages = /* GraphQL */ `
     }
   }
 `;
+
+export const listUsers = `
+  query listUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken){
+      items {
+        id
+        name
+      }
+      nextToken
+    }
+  }
+`;
