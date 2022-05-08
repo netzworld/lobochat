@@ -3,6 +3,9 @@ import styles from "../styles/Home.module.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { API, Auth, withSSRContext, graphqlOperation } from "aws-amplify";
 import Message from "../components/message";
+import { listMessages } from "../graphql/queries";
+import { createMessage } from "../graphql/mutations";
+import { onCreateMessage } from "../graphql/subscriptions";
 
 
 function Home({ messages, signOut }) {
