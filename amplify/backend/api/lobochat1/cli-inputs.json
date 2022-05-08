@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "lobochat1",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\Users\\Nic Randazzo\\Documents\\Github Repos\\lobochat-1\\amplify\\backend\\api\\lobochat1\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authlobochat1159650d3"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": []
+  }
+}

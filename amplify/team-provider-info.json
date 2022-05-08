@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lobochat1-dev-195448-authRole",
+      "UnauthRoleArn": "arn:aws:iam::472917647355:role/amplify-lobochat1-dev-195448-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::472917647355:role/amplify-lobochat1-dev-195448-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-lobochat1-dev-195448-deployment",
+      "UnauthRoleName": "amplify-lobochat1-dev-195448-unauthRole",
+      "StackName": "amplify-lobochat1-dev-195448",
+      "StackId": "arn:aws:cloudformation:us-east-1:472917647355:stack/amplify-lobochat1-dev-195448/3a433de0-ce7a-11ec-9842-125657df9ead",
+      "AmplifyAppId": "d4kallk8cptog"
+    },
+    "categories": {
+      "auth": {
+        "lobochat1159650d3": {}
+      }
+    }
+  }
+}
