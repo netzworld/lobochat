@@ -43,15 +43,43 @@ export const deleteMessage = /* GraphQL */ `
     }
   }
 `;
-
 export const createUser = /* GraphQL */ `
-  mutation createUser(
-    $input: createUser!
+  mutation CreateUser(
+    $input: CreateUserInput!
     $condition: ModelUserConditionInput
   ) {
-    createMessage(input: $input, condition: $condition) {
+    createUser(input: $input, condition: $condition) {
       id
       name
+      friends
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      name
+      friends
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      name
+      friends
       createdAt
       updatedAt
     }

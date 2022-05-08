@@ -1,0 +1,15 @@
+projects:
+  lobochat1:
+    schemaPath: amplify/backend/api/lobochat1/build/schema.graphql
+    includes:
+      - graphql/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: graphql
+        region: us-east-1
+        apiId: null
+        maxDepth: 2
