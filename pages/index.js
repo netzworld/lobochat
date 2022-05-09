@@ -7,6 +7,10 @@ import * as queries from "../graphql/queries";
 import * as mutations from "../graphql/mutations";
 import { onCreateMessage } from "../graphql/subscriptions";
 
+
+
+
+
 async function checkUSer(user){
   const userInput = {
     name: user.username,
