@@ -3,9 +3,45 @@ import styles from "../styles/Home.module.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { API, Auth, withSSRContext, graphqlOperation } from "aws-amplify";
 import Message from "../components/message";
-import { listMessages, listUsers } from "../graphql/queries";
-import { createMessage, createUser } from "../graphql/mutations";
+import * as queries from "../graphql/queries";
+import * as mutations from "../graphql/mutations";
 import { onCreateMessage } from "../graphql/subscriptions";
+
+async function checkUSer(user){
+  const userInput = {
+    name: user.username,
+    friends: [],
+  };
+
+  try {
+    const users = await API.graphql({
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+      query: queries.listUsers,
+    });
+    console.log(users); // not necessary
+
+    let a = false;
+
+    for (let x in users.data?.listUsers.items) {
+      if (users.data.listUsers.items[x].name === user.username) {
+        a = true;
+      }
+    }
+
+    if (!a) {
+      try {
+        await API.graphql(graphqlOperation(mutations.createUser, { input: userInput }));
+        console.log("Created the user ", userInput.name);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  } catch (error) {
+    console.error(err);
+  }
+
+  
+}
 
 
 function Home({ messages, signOut }) {
@@ -23,38 +59,13 @@ function Home({ messages, signOut }) {
       owner: user.username, // this is the username of the current user
     };
 
-    const userInput = {
-      name: user.username
-    };
-
-    try{
-      await API.graphql({
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: createUser,
-        variables: {
-          input: userInput,
-        },
-      });
-      console.log("Created the user ", userInput.name);
-    } catch (err) {
-      console.error(err);
-    }
-
-    try {
-      const users = await API.graphql({
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: listUsers,
-      });
-      console.log(users);
-    } catch (error) {
-      console.error(err);
-    }
+    checkUSer(user);
 
     // Try make the mutation to graphql API
     try {
       await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: createMessage,
+        query: mutations.createMessage,
         variables: {
           input: input,
         },
@@ -98,7 +109,7 @@ function Home({ messages, signOut }) {
     async function getMessages() {
       try {
         const messagesReq = await API.graphql({
-          query: listMessages,
+          query: queries.listMessages,
           authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         setStateMessages([...messagesReq.data.listMessages.items]);
@@ -125,6 +136,7 @@ function Home({ messages, signOut }) {
         <div className={styles.container}>
           <button onClick={signOut} style={{ marginRight: "8px" }}>Sign Out</button>
           <h1 className={styles.title}>LoboChat</h1>
+
           <div className={styles.chatbox}>
             {stateMessages
               // sort messages oldest to newest client-side
