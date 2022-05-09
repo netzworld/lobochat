@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ReactDOM } from "react";
 import styles from "../styles/Home.module.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { API, Auth, withSSRContext, graphqlOperation } from "aws-amplify";
@@ -43,6 +43,82 @@ async function checkUSer(user){
   
 }
 
+async function deleteUser(){
+  const delOne = {
+    id: "89bf5c55-0629-4fc0-8a88-74c6e182f8ec"
+  };
+  const delTwo = {
+   id: "df0d529d-0abf-47e5-895e-5c49076f4362" 
+  };
+  const delThree = {
+    id: "63e36995-21ed-48f8-ad64-efc830e07b7c"
+  };
+  const delFour = {
+    id: "fe57231a-52ee-4f1d-8506-60fbc2ae4d88"
+  };
+
+  
+  
+
+  const deletedTodo = await API.graphql({ query: mutations.deleteUser, variables: { input: delOne } });
+  const deletedtwo = await API.graphql({ query: mutations.deleteUser, variables: { input: delTwo } });
+  const deletedThree = await API.graphql({ query: mutations.deleteUser, variables: { input: delThree } });
+  const deletedFour = await API.graphql({ query: mutations.deleteUser, variables: { input: delFour } });
+
+}
+
+async function createUserDOM() {
+
+  // array to store users
+  let people = [];
+
+
+  try {
+    const users = await API.graphql({
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+      query: queries.listUsers,
+    });
+    for (let x in users.data?.listUsers.items) {
+      people.push(users.data.listUsers.items[x].name);
+    }
+  } catch (error) {
+    console.error(err);
+  }
+
+  const sidebarUsers = document.querySelector(".styles.users");
+
+  // const userNames = [];
+  // for(let a in people){
+  //   userNames.push()
+  // }
+  
+  ReactDOM.render(<div>
+    {people.map(person => <div key={person}> {person} </div>)}
+  </div>
+  );
+  // render() 
+  // {
+  //   return (
+  //   <div>
+  //     {people.map(person => <div key={person}> {person} </div>)}
+  //   </div>
+  //   );
+
+  //   }
+  
+  // for (let person in people) {
+  //   let user = document.createElement('div');
+
+  //   user.textContent = person;
+
+  //   user.classList.add("user");
+
+  //   sidebarUsers.appendChild(user);
+
+  // }
+
+}
+
 
 function Home({ messages, signOut }) {
 
@@ -60,6 +136,23 @@ function Home({ messages, signOut }) {
     };
 
     checkUSer(user);
+    const [box, setBox] = useState(null);
+
+    useEffect(() => {
+      let people = [];
+      try {
+        const users = await API.graphql({
+          authMode: "AMAZON_COGNITO_USER_POOLS",
+          query: queries.listUsers,
+        });
+        for (let x in users.data?.listUsers.items) {
+          people.push(users.data.listUsers.items[x].name);
+        }
+        setBox([...people]);
+      } catch (error) {
+        console.error(err);
+      }
+    }, [person]);
 
     // Try make the mutation to graphql API
     try {
@@ -133,6 +226,14 @@ function Home({ messages, signOut }) {
   if (user) {
     return (
       <div className={styles.background}>
+        <div className={styles.sidebar}>
+          { box.map((person) => {
+              return (
+                <li key={i} >{person.name}</li>
+              );
+            })
+          }
+        </div>
         <div className={styles.container}>
           <button onClick={signOut} style={{ marginRight: "8px" }}>Sign Out</button>
           <h1 className={styles.title}>LoboChat</h1>
