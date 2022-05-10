@@ -3,6 +3,125 @@ import styles from "../styles/Home.module.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { API, Auth, withSSRContext, graphqlOperation } from "aws-amplify";
 import Message from "../components/message";
+import * as queries from "../graphql/queries";
+import * as mutations from "../graphql/mutations";
+import { onCreateMessage } from "../graphql/subscriptions";
+
+async function checkUSer(user){
+  const userInput = {
+    name: user.username,
+    friends: [],
+  };
+
+  try {
+    const users = await API.graphql({
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+      query: queries.listUsers,
+    });
+    console.log(users); // not necessary
+
+    let a = false;
+
+    for (let x in users.data?.listUsers.items) {
+      if (users.data.listUsers.items[x].name === user.username) {
+        a = true;
+      }
+    }
+
+    if (!a) {
+      try {
+        await API.graphql(graphqlOperation(mutations.createUser, { input: userInput }));
+        console.log("Created the user ", userInput.name);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  } catch (error) {
+    console.error(err);
+  }
+
+  
+}
+
+// async function deleteUser(){
+//   const delOne = {
+//     id: "89bf5c55-0629-4fc0-8a88-74c6e182f8ec"
+//   };
+//   const delTwo = {
+//    id: "df0d529d-0abf-47e5-895e-5c49076f4362" 
+//   };
+//   const delThree = {
+//     id: "63e36995-21ed-48f8-ad64-efc830e07b7c"
+//   };
+//   const delFour = {
+//     id: "fe57231a-52ee-4f1d-8506-60fbc2ae4d88"
+//   };
+
+  
+  
+
+//   const deletedTodo = await API.graphql({ query: mutations.deleteUser, variables: { input: delOne } });
+//   const deletedtwo = await API.graphql({ query: mutations.deleteUser, variables: { input: delTwo } });
+//   const deletedThree = await API.graphql({ query: mutations.deleteUser, variables: { input: delThree } });
+//   const deletedFour = await API.graphql({ query: mutations.deleteUser, variables: { input: delFour } });
+
+// }
+
+// const populatePersonArray = async () => {
+//   try {
+//     let people = new Array();
+
+//     const usersAPI = await API.graphql({
+//       authMode: "AMAZON_COGNITO_USER_POOLS",
+//       query: queries.listUsers,
+//     }); // NOT A PROMISE
+//     const users = usersAPI.data?.listUsers.items;
+    
+//     for (let x in users) {
+//       people.push(users[x]);
+//     }
+//     let peopleArr = new Array();
+
+//     await Promise.all(people.map(async person => {
+//       if(person.name){
+//         peopleArr.push(person.name);
+//       }
+//     }));
+
+//     return (
+//       <>
+//         {peopleArr.map(i => {
+//           <p> {peopleArr.at(i)} </p>
+//         })}
+//       </>
+//     );
+
+//     // for(let a in people){
+//     //   console.log(people[a]); // each index of people is an object. people[0] = {id, name, etc}
+//     // }
+
+  
+//     // const getArray = async () => {
+//     //   Promise.all(people).then( () => {
+//     //     return (
+//     //       <>
+//     //         {people.map( (person, i) => {
+//     //           <p key={i}>{person}</p>
+//     //         })}
+//     //       </>
+//     //     );
+//     //   })
+//     //   //console.log(promiseValues);
+//     // }
+
+//     // return await getArray();
+  
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+  
+// }
 
 
 function Home({ messages, signOut }) {
@@ -20,12 +139,18 @@ function Home({ messages, signOut }) {
       owner: user.username, // this is the username of the current user
     };
 
+    checkUSer(user); // Checks if the user already exists or not, no return
+    
+    
+
+  
+    
 
     // Try make the mutation to graphql API
     try {
       await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: createMessage,
+        query: mutations.createMessage,
         variables: {
           input: input,
         },
@@ -36,6 +161,8 @@ function Home({ messages, signOut }) {
   };
 
 
+
+  
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -69,7 +196,7 @@ function Home({ messages, signOut }) {
     async function getMessages() {
       try {
         const messagesReq = await API.graphql({
-          query: listMessages,
+          query: queries.listMessages,
           authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         setStateMessages([...messagesReq.data.listMessages.items]);
@@ -93,9 +220,14 @@ function Home({ messages, signOut }) {
   if (user) {
     return (
       <div className={styles.background}>
+        <div className={styles.sidebar}>
+          
+
+        </div>
         <div className={styles.container}>
           <button onClick={signOut} style={{ marginRight: "8px" }}>Sign Out</button>
           <h1 className={styles.title}>LoboChat</h1>
+
           <div className={styles.chatbox}>
             {stateMessages
               // sort messages oldest to newest client-side

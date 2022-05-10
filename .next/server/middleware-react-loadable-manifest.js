@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST={"..\\node_modules\\react-map-gl\\dist\\esm\\components\\map.js -> mapbox-gl":{"id":"..\\node_modules\\react-map-gl\\dist\\esm\\components\\map.js -> mapbox-gl","files":["static/chunks/node_modules_mapbox-gl_index_js.js"]}}
