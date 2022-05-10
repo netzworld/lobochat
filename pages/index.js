@@ -71,56 +71,51 @@ async function deleteUser(){
 
 }
 
-async function createUserDOM() {
-
-  // array to store users
-  let people = [];
-
-
+const populatePersonArray = async () => {
   try {
+    let people = [];
+
     const users = await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
       query: queries.listUsers,
     });
+    
     for (let x in users.data?.listUsers.items) {
-      people.push(users.data.listUsers.items[x].name);
+      people.push(users.data.listUsers.items[x]);
     }
+    for(let a in people){
+      console.log(people[a]);
+    }
+
+    function persons(){
+      return (
+        <>
+          {people?.map( ({name, id}) => {
+            <p key={id}> {name} </p>
+          } )}
+        </>
+      );
+    }
+    // const getArray = async () => {
+    //   Promise.all(people).then( () => {
+    //     return (
+    //       <>
+    //         {people.map( (person, i) => {
+    //           <p key={i}>{person}</p>
+    //         })}
+    //       </>
+    //     );
+    //   })
+    //   //console.log(promiseValues);
+    // }
+
+    // return await getArray();
+    return persons;
   } catch (error) {
-    console.error(err);
+    console.error(error);
+    return [];
   }
-
-  const sidebarUsers = document.querySelector(".styles.users");
-
-  // const userNames = [];
-  // for(let a in people){
-  //   userNames.push()
-  // }
   
-  ReactDOM.render(<div>
-    {people.map(person => <div key={person}> {person} </div>)}
-  </div>
-  );
-  // render() 
-  // {
-  //   return (
-  //   <div>
-  //     {people.map(person => <div key={person}> {person} </div>)}
-  //   </div>
-  //   );
-
-  //   }
-  
-  // for (let person in people) {
-  //   let user = document.createElement('div');
-
-  //   user.textContent = person;
-
-  //   user.classList.add("user");
-
-  //   sidebarUsers.appendChild(user);
-
-  // }
-
 }
 
 
@@ -139,24 +134,12 @@ function Home({ messages, signOut }) {
       owner: user.username, // this is the username of the current user
     };
 
-    checkUSer(user);
-    const [box, setBox] = useState(null);
+    checkUSer(user); // Checks if the user already exists or not, no return
+    
+    
 
-    useEffect(() => {
-      let people = [];
-      try {
-        const users = await API.graphql({
-          authMode: "AMAZON_COGNITO_USER_POOLS",
-          query: queries.listUsers,
-        });
-        for (let x in users.data?.listUsers.items) {
-          people.push(users.data.listUsers.items[x].name);
-        }
-        setBox([...people]);
-      } catch (error) {
-        console.error(err);
-      }
-    }, [person]);
+  
+    
 
     // Try make the mutation to graphql API
     try {
@@ -172,7 +155,10 @@ function Home({ messages, signOut }) {
     }
   };
 
+ 
+ 
 
+  
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -231,12 +217,7 @@ function Home({ messages, signOut }) {
     return (
       <div className={styles.background}>
         <div className={styles.sidebar}>
-          { box.map((person) => {
-              return (
-                <li key={i} >{person.name}</li>
-              );
-            })
-          }
+          {populatePersonArray()}
         </div>
         <div className={styles.container}>
           <button onClick={signOut} style={{ marginRight: "8px" }}>Sign Out</button>
