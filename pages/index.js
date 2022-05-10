@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactDOM } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { API, Auth, withSSRContext, graphqlOperation } from "aws-amplify";
@@ -6,10 +6,6 @@ import Message from "../components/message";
 import * as queries from "../graphql/queries";
 import * as mutations from "../graphql/mutations";
 import { onCreateMessage } from "../graphql/subscriptions";
-
-
-
-
 
 async function checkUSer(user){
   const userInput = {
@@ -47,76 +43,85 @@ async function checkUSer(user){
   
 }
 
-async function deleteUser(){
-  const delOne = {
-    id: "89bf5c55-0629-4fc0-8a88-74c6e182f8ec"
-  };
-  const delTwo = {
-   id: "df0d529d-0abf-47e5-895e-5c49076f4362" 
-  };
-  const delThree = {
-    id: "63e36995-21ed-48f8-ad64-efc830e07b7c"
-  };
-  const delFour = {
-    id: "fe57231a-52ee-4f1d-8506-60fbc2ae4d88"
-  };
+// async function deleteUser(){
+//   const delOne = {
+//     id: "89bf5c55-0629-4fc0-8a88-74c6e182f8ec"
+//   };
+//   const delTwo = {
+//    id: "df0d529d-0abf-47e5-895e-5c49076f4362" 
+//   };
+//   const delThree = {
+//     id: "63e36995-21ed-48f8-ad64-efc830e07b7c"
+//   };
+//   const delFour = {
+//     id: "fe57231a-52ee-4f1d-8506-60fbc2ae4d88"
+//   };
 
   
   
 
-  const deletedTodo = await API.graphql({ query: mutations.deleteUser, variables: { input: delOne } });
-  const deletedtwo = await API.graphql({ query: mutations.deleteUser, variables: { input: delTwo } });
-  const deletedThree = await API.graphql({ query: mutations.deleteUser, variables: { input: delThree } });
-  const deletedFour = await API.graphql({ query: mutations.deleteUser, variables: { input: delFour } });
+//   const deletedTodo = await API.graphql({ query: mutations.deleteUser, variables: { input: delOne } });
+//   const deletedtwo = await API.graphql({ query: mutations.deleteUser, variables: { input: delTwo } });
+//   const deletedThree = await API.graphql({ query: mutations.deleteUser, variables: { input: delThree } });
+//   const deletedFour = await API.graphql({ query: mutations.deleteUser, variables: { input: delFour } });
 
-}
+// }
 
-const populatePersonArray = async () => {
-  try {
-    let people = [];
+// const populatePersonArray = async () => {
+//   try {
+//     let people = new Array();
 
-    const users = await API.graphql({
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-      query: queries.listUsers,
-    });
+//     const usersAPI = await API.graphql({
+//       authMode: "AMAZON_COGNITO_USER_POOLS",
+//       query: queries.listUsers,
+//     }); // NOT A PROMISE
+//     const users = usersAPI.data?.listUsers.items;
     
-    for (let x in users.data?.listUsers.items) {
-      people.push(users.data.listUsers.items[x]);
-    }
-    for(let a in people){
-      console.log(people[a]);
-    }
+//     for (let x in users) {
+//       people.push(users[x]);
+//     }
+//     let peopleArr = new Array();
 
-    function persons(){
-      return (
-        <>
-          {people?.map( ({name, id}) => {
-            <p key={id}> {name} </p>
-          } )}
-        </>
-      );
-    }
-    // const getArray = async () => {
-    //   Promise.all(people).then( () => {
-    //     return (
-    //       <>
-    //         {people.map( (person, i) => {
-    //           <p key={i}>{person}</p>
-    //         })}
-    //       </>
-    //     );
-    //   })
-    //   //console.log(promiseValues);
-    // }
+//     await Promise.all(people.map(async person => {
+//       if(person.name){
+//         peopleArr.push(person.name);
+//       }
+//     }));
 
-    // return await getArray();
-    return persons;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+//     return (
+//       <>
+//         {peopleArr.map(i => {
+//           <p> {peopleArr.at(i)} </p>
+//         })}
+//       </>
+//     );
+
+//     // for(let a in people){
+//     //   console.log(people[a]); // each index of people is an object. people[0] = {id, name, etc}
+//     // }
+
   
-}
+//     // const getArray = async () => {
+//     //   Promise.all(people).then( () => {
+//     //     return (
+//     //       <>
+//     //         {people.map( (person, i) => {
+//     //           <p key={i}>{person}</p>
+//     //         })}
+//     //       </>
+//     //     );
+//     //   })
+//     //   //console.log(promiseValues);
+//     // }
+
+//     // return await getArray();
+  
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+  
+// }
 
 
 function Home({ messages, signOut }) {
@@ -155,8 +160,7 @@ function Home({ messages, signOut }) {
     }
   };
 
- 
- 
+
 
   
   const [user, setUser] = useState(null);
@@ -217,7 +221,8 @@ function Home({ messages, signOut }) {
     return (
       <div className={styles.background}>
         <div className={styles.sidebar}>
-          {populatePersonArray()}
+          
+
         </div>
         <div className={styles.container}>
           <button onClick={signOut} style={{ marginRight: "8px" }}>Sign Out</button>
