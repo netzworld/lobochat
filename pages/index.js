@@ -139,7 +139,7 @@ function Home({ messages, signOut }) {
       owner: user.username, // this is the username of the current user
     };
 
-    checkUSer(user); // Checks if the user already exists or not, no return
+    //checkUSer(user); // Checks if the user already exists or not, no return
     
     
 
