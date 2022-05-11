@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "lobochat",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authlobochatc8876255",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

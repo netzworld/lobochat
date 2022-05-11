@@ -9,8 +9,21 @@ projects:
       amplify:
         codeGenTarget: javascript
         generatedFileName: ''
-
         docsFilePath: graphql
         region: us-east-1
         apiId: null
         maxDepth: 2
+  lobochat:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - ./graphql/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: ./graphql
+extensions:
+  amplify:
+    version: 3
