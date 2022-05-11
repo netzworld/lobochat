@@ -1,9 +1,174 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: 'Times New Roman', Times, serif;
+    background: linear-gradient(to right, rgb(45, 35, 99), rgb(119, 109, 172));
+
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+form div button.amplify-button.amplify-field-group__control:not(.amplify-field__show-password){
+  transform: translate(100%, 625%);
+}
+
+
+#radix-\:r1\:-content-0 div div div button.amplify-button.amplify-field-group__control[data-size="small"]{
+  display: flex;
+  flex-direction: column;
+margin-left: 38%;
+margin-top: 8%;
+}
+
+
+@media only screen and (max-width: 1000px) {
+#radix-\:r1\:-content-0 div div div button.amplify-button.amplify-field-group__control[data-size="small"]{
+  margin-top: 16%;
+  margin-left: 30%;
+}
+}
+
+/** Sign in and Create Account buttons at the top of the page*/
+#radix-\:r1\:-trigger-1 {
+background-color: rgb(42, 113, 146);
+  border: 0;
+  padding: 6px;
+  color: white;
+} 
+#radix-\:r1\:-trigger-1:hover{
+
+  transition: 0.5s;
+  background-color: rgb(63, 63, 194);
+  cursor: pointer;
+
+} 
+
+#radix-\:r1\:-trigger-0 {
+background-color: rgb(42, 113, 146);
+  border: 0;
+  padding: 6px;
+  color: white;
+}
+#radix-\:r1\:-trigger-0:hover{
+
+  transition: 0.5s;
+  background-color: rgb(63, 63, 194);
+  cursor: pointer;
+
+} 
+
+fieldset.amplify-flex {
+  background-color: white;
+  border-radius: 15px;
+  /*border: 2px solid #616161;  */
+  display: flex;
+  flex-direction: column;
+  
+  width: 400px;
+  height: 250px;
+  position: relative;
+  top: 40%;
+  left: 20%;
+  transform: translate(-50%, 50%);
+
+}
+fieldset label{
+  margin: 1em;
+}
+
+@media screen and (min-width: 1000px) {
+  fieldset.amplify-flex:not(button) {
+    background-color: white;
+    border-radius: 15px;
+   /* border: 2px solid #616161;*/
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 250px;
+    position: relative;
+    top: 40%;
+    left: 30%;
+    transform: translate(-50%, 50%);
+}
+form div button.amplify-button.amplify-field-group__control:not(.amplify-field__show-password){
+  transform: translate(175%, 625%);
+}
+
+#radix-\:r1\:-content-0 div div div button.amplify-button.amplify-field-group__control[data-size="small"]{
+  margin-top: 8%;
+  margin-left: 42%;
+}
+  
+}
+
+fieldset.amplify-flex span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+fieldset.amplify-flex div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+fieldset.amplify-flex label {
+  display: inline;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+}
+
+.amplify-field-group__outer-end button{
+  display: flexbox;
+  align-self: center;
+  padding: .5em 1em;
+}
+
+
+
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+.home-button:hover {
+    transition: 0.5s;
+    background-color: brown;
+    cursor: pointer;
+}
+
+.home-button {
+  background-color: rgb(85, 85, 243);
+    padding: 12px;
+    border: 0;
+    background-color:  rgb(45, 35, 99);
+    color: white;
 }
 
 a {

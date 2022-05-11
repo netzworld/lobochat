@@ -230,7 +230,6 @@ function Home({ messages, signOut }) {
 
         </div>
         <div className={styles.container}>
-          <button onClick={signOut} style={{ marginRight: "8px" }}>Sign Out</button>
           <h1 className={styles.title}>LoboChat</h1>
 
           <div className={styles.chatbox}>
@@ -257,13 +256,14 @@ function Home({ messages, signOut }) {
                 required
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
-                placeholder="💬 Send a message to the world 🌎"
+                placeholder="Write your message here..."
                 className={styles.textBox}
               />
-              <button style={{ marginLeft: "8px" }}>Send</button>
+              <button className="home-button" style={{ marginLeft: "8px" }}>Send</button>
             </form>
           </div>
-        </div>
+          <button className="home-button" onClick={signOut} style={{ marginRight: "8px" }}>Sign Out</button>
+        </div>     
       </div>
     );
   } else {
