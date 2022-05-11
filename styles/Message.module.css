@@ -12,7 +12,7 @@
   padding: 8px;
   font-family: "roboto";
   color: #fff;
-  background: linear-gradient(243deg, #2397f5, #498efc 100%);
+  background-color:  rgb(53, 26, 201);
   border-radius: 8px;
 }
 
@@ -30,17 +30,13 @@
   padding: 8px;
   font-family: "roboto";
   color: #000;
-  background: linear-gradient(
-    193deg,
-    rgba(237, 247, 255, 1) 0%,
-    rgba(223, 223, 223, 1) 100%
-  );
+  background-color: rgb(200, 194, 194);
   border-radius: 8px;
 }
 
 .senderText {
   font-family: "roboto";
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.7);
+  color: rgba(255, 255, 255, 1);
   margin-bottom: 4px;
 }
